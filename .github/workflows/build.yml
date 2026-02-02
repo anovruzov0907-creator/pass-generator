@@ -12,12 +12,19 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    # İcazə xətasını (Permission error) həll edən hissə:
+    - name: Fix permissions
+      run: |
+        sudo chown -R runner:docker .
+        sudo chmod -R 777 .
+
     - name: Build APK with Buildozer
       uses: ArtemSBulgakov/buildozer-action@v1
       id: buildozer
       with:
         workdir: .
         buildozer_version: stable
+        # Əgər Python 3.12 xətası versə, bura python_version: 3.11 əlavə edə bilərsən
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
